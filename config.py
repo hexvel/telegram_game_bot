@@ -1,4 +1,4 @@
-TOKEN = "6514252242:AAHTDOK5cbB_6mE38kzq_ZL52oYUAnS25mM"
+TOKEN = ""
 
 
 class Icons:
