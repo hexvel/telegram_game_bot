@@ -1,0 +1,3 @@
+class Util:
+    def get_user_id(self, message):
+        ...
