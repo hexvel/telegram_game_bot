@@ -41,4 +41,4 @@ python bot.py
 
 ## Автор
 
-Этот проект создан и поддерживается командой (https://t.me/hexvel_learn)[Hexvel Comunity].
+Этот проект создан и поддерживается командой (Hexvel Comunity)[https://t.me/hexvel_learn].
