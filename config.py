@@ -1,4 +1,4 @@
-TOKEN = "6514252242:AAHTDOK5cbB_6mE38kzq_ZL52oYUAnS25mM"
+TOKEN = "6514252242:AAHKXteFCnmZQ7rSd9WOg_GVNl8TkyK0SEo"
 
 
 class Icons:
@@ -13,9 +13,12 @@ class Icons:
     MONEY = "€"
     WIFE = "👰‍♀️"
     FACE = "👽"
+    HEART = "❤️"
+    BREAD = "🍞"
 
 
 class Words:
+    NOTSELF = "{FALSE} Эта команда может быть использована только с ответом на сообщение пользователя."
     NOTGETDB = "{FALSE} Произошла ошибка при получении <a href=tg://user?id={user_id}>пользователя</a> из базы данных."
     NOTFOUND = "{FALSE} <a href='tg://user?id={user_id}'>Пользователь</a> не найден в базе данных."
     REPLYNOTFOUND = "{FALSE} Укажите пользователя."
@@ -25,8 +28,12 @@ class Words:
     PROFILEWITHOUTDES = "{USER} Профиль <a href='tg://user?id={user_id}'>пользователя</a>\n{KING} Никнейм: {nickname}\n{COMMENT} Описание: Отстствует\n{FACE} Пол: {sex}"
     PROFILEWITHDES = "{USER} Профиль <a href='tg://user?id={user_id}'>пользователя</a>\n{KING} Никнейм: {nickname}\n{COMMENT} Описание: {description}\n{FACE} Пол: {sex}"
 
+    REQUEST_MARRY = "{WIFE} <b><a href='tg://user?id={partner_id}'>{partner_nickname}</a></b>, Вам сделали предложение руки и сердца. Вы согласны?."
     ALREADY_MARRIED = "{FALSE} <a href='tg://user?id={user_id}'>Пользователь</a> уже в браке."
     NOTMARRIED = "{FALSE} <a href='tg://user?id={user_id}'>Пользователь</a> не в браке."
     MARRIED = "{TRUE} <a href='tg://user?id={user_id}'>Пользователь</a> теперь в браке с <a href='tg://user?id={partner_id}'>{partner_nickname}</a>."
     MARRIEDWITH = "{WIFE} <a href='tg://user?id={user_id}'>Пользователь</a> в браке с <a href='tg://user?id={partner_id}'>{partner_nickname}</a>"
     DIVORCE = "{TRUE} <a href='tg://user?id={user_id}'>Пользователь</a> решил уйти за хлебом. Пожелаем удачки ;)"
+    CANCELREQUEST = "{FALSE} К сожалению <b><a href='tg://user?id={user_id}'>пользователь</a></b> не принял запрос."
+    NOTPERMISSION = "{FALSE} Бля, чел, не вмешивайся а\nУ нас тут молодожёны намечаются :D"
+    ALLOWREQUEST = "{TRUE} <a href='tg://user?id={user_id}'>Пользователь</a> принял запрос\n{WIFE} Поприветствуем молодожён!"

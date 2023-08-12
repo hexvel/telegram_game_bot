@@ -36,7 +36,7 @@ class User(Database):
         if user_info['married_to'] == "null":
             text += f"\n{Icons.WIFE} Семья: не создана"
         else:
-            name = self.find_one({"user_id": user_info['married_to']})[
+            name = self.find_one({"user_id": int(user_info['married_to'])})[
                 'result']['nickname']
             text += f"\n{Icons.WIFE} В паре с: <a href='tg://user?id={user_info['married_to']}'>{name}</a>"
 

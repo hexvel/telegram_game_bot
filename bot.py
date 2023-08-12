@@ -113,7 +113,7 @@ async def update_state_profile(m: Message, state: FSMContext):
     await state.finish()
 
 
-# Обработка callback клавиатуры
+# Обработка callback клавиатуры для смены пола
 @dp.callback_query_handler(Text(startswith='set_sex_'))
 async def process_callback_keyboards_for_sex(callback: types.CallbackQuery):
     if callback.data == "set_sex_girl":
@@ -124,6 +124,18 @@ async def process_callback_keyboards_for_sex(callback: types.CallbackQuery):
     if callback.data == "set_sex_boy":
         await user.edit_user_settings(callback.message, {"user_id": callback.from_user.id}, {"$set": {"sex": "boy"}})
         await bot.delete_message(callback.message.chat.id, callback.message.message_id)
+        await callback.answer()
+
+
+# Обработка callback клавиатуры для вступления в брак
+@dp.callback_query_handler(Text(startswith='marry_set_'))
+async def process_callback_keyboards_for_sex(callback: types.CallbackQuery):
+    if callback.data.split("_")[-3] == "cancel":
+        await marry.cancel_marry(bot, callback.message, callback)
+        await callback.answer()
+
+    elif callback.data.split("_")[-3] == "allow":
+        await marry.allow_marry(bot, callback.message, callback)
         await callback.answer()
 
 
