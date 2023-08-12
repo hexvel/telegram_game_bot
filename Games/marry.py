@@ -52,7 +52,6 @@ class Marry(Database):
 
     async def delete_marry(self, message: Message):
         user_id = message.from_user.id
-
         get_self_info = self.find_one({"user_id": user_id})
 
         if get_self_info['result'] is None:
@@ -68,7 +67,6 @@ class Marry(Database):
 
     async def get_marry(self, message: Message):
         user_id = message.from_user.id
-
         get_self_info = self.find_one({"user_id": user_id})
 
         if get_self_info['result'] is None:

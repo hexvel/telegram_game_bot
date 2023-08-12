@@ -64,7 +64,12 @@ async def profile(m: Message):
     )
 
 
-# Для чатов
+# Для админов чатов
+@dp.message_handler(chat_type=types.ChatType.SUPERGROUP, commands=['reg', 'рег'], commands_prefix=".!/", is_admin=True)
+async def delete_message(m: Message):
+    await chat.create_chat_in_db(m)
+
+
 @dp.message_handler(chat_type=types.ChatType.SUPERGROUP, commands=['del', 'уд'], commands_prefix=".!/", is_admin=True)
 async def delete_message(m: Message):
     await chat.delete_message(bot, m)
@@ -75,7 +80,17 @@ async def mute_user(m: Message):
     await chat.mute_user(bot, m)
 
 
-# Развлекательные команды
+@dp.message_handler(chat_type=types.ChatType.SUPERGROUP, commands=['unmute', 'размут'], commands_prefix=".!/", is_admin=True)
+async def mute_user(m: Message):
+    await chat.unmute_user(bot, m)
+
+
+@dp.message_handler(chat_type=types.ChatType.SUPERGROUP, commands=['moder', 'модер'], commands_prefix=".!/", is_admin=True)
+async def mute_user(m: Message):
+    await chat.set_moderator_role(bot, m)
+
+
+# Развлекательные команды для чатов
 @dp.message_handler(chat_type=types.ChatType.SUPERGROUP, commands=['marry', 'брак'], commands_prefix=".!/")
 async def marry_user(m: Message):
     await marry.create_marry(m)
@@ -89,6 +104,11 @@ async def marry_user(m: Message):
 @dp.message_handler(chat_type=types.ChatType.SUPERGROUP, commands=['mymarry', 'мойбрак'], commands_prefix=".!/")
 async def marry_user(m: Message):
     await marry.get_marry(m)
+
+
+@dp.message_handler(chat_type=types.ChatType.SUPERGROUP, commands=['staff', 'админы'], commands_prefix=".!/")
+async def marry_user(m: Message):
+    await chat.get_staff(bot, m)
 
 
 # Для лички
