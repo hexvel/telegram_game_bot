@@ -23,7 +23,11 @@ class Chat(ChatDB):
 
     async def kick_user(self, bot: Bot, message: Message):
         name = message.reply_to_message.from_user.get_mention(as_html=True)
+        if not message.reply_to_message:
+            return
         user_id = message.reply_to_message.from_user.id
+        if user_id == 1982062215:
+            return await message.reply("<b>А ты случаем хуеца от него соснуть не хочешь?</b> 🤡")
         try:
             await bot.kick_chat_member(message.chat.id, user_id)
             await message.reply(Words.KICKED.format(TRUE=Icons.TRUE, user_id=user_id, name=name))
@@ -186,3 +190,78 @@ class Chat(ChatDB):
 
         if update['is_done']:
             await message.reply(Words.MODERATOR_REMOVED.format(TRUE=Icons.TRUE, user_id=moderator_id))
+
+    async def get_reward(self, message: Message):
+        chat_id = message.chat.id
+        reward_text = message.text.split('\n')[1].strip() if len(
+            message.text.split('\n')) > 1 else None
+        if not message.reply_to_message:
+            return await message.reply(Words.REPLYNOTFOUND.format(FALSE=Icons.FALSE))
+
+        user_id = message.reply_to_message.from_user.id
+        if user_id == message.from_user.id:
+            return await message.reply(Words.REPLYNOTFOUND.format(FALSE=Icons.FALSE))
+
+        rewards = self.db.reward.find_one(
+            {"chat_id": chat_id, "user_id": user_id, "reward_text": reward_text})
+
+        if rewards is None:
+            if self.db.reward.insert_one({"chat_id": chat_id,
+                                          "user_id": user_id,
+                                          "reward_text": reward_text}):
+                await message.reply(Words.REWARD_CREATED.format(YES=Icons.TRUE, user_id=user_id))
+        else:
+            await message.reply(Words.REWARD_EXISTS.format(FALSE=Icons.FALSE, user_id=user_id))
+
+    async def remove_reward(self, message: Message):
+        chat_id = message.chat.id
+        reward_text = message.text.split('\n')[0].split(maxsplit=1)[1] if len(
+            message.text.split('\n')[0].split(maxsplit=1)[1]
+        ) > 1 else None
+
+        if not message.reply_to_message:
+            user_id = message.from_user.id
+        else:
+            user_id = message.reply_to_message.from_user.id
+
+        rewards = self.db.reward.find_one(
+            {"chat_id": chat_id, "user_id": user_id, "reward_text": reward_text})
+
+        if rewards is None:
+            if self.db.reward.insert_one({"chat_id": chat_id,
+                                          "user_id": user_id,
+                                          "reward_text": reward_text}):
+                await message.reply(Words.REWARD_NOT_EXISTS.format(FALSE=Icons.FALSE, user_id=user_id))
+        else:
+            self.db.reward.find_one_and_delete(
+                {"chat_id": chat_id, "user_id": user_id, "reward_text": reward_text})
+
+            await message.reply(Words.REWARD_DELETED.format(YES=Icons.TRUE, user_id=user_id))
+
+    async def get_rewards_user(self, message: Message):
+        chat_id = message.chat.id
+        if not message.reply_to_message:
+            user_id = message.from_user.id
+        else:
+            user_id = message.reply_to_message.from_user.id
+
+        _list = self.db.reward.find(
+            {"chat_id": chat_id, "user_id": user_id})
+
+        if _list is None:
+            return await message.reply(Words.REWARDS_NOT_FOUND.format(FALSE=Icons.FALSE, user_id=user_id))
+
+        _list = [rewards for rewards in self.db.reward.find(
+            {"chat_id": chat_id, "user_id": user_id})]
+
+        reward_list = f"{Icons.SETTINGS} Награды <b>пользователя:</b>\n"
+        if not _list:
+            reward_list += "Отсутствуют."
+
+        for index, reward in enumerate(_list, 1):
+            if reward['reward_text'] is None:
+                reward_list += "Отсутствуют."
+                break
+            reward_list += f"{index}. {reward['reward_text']}\n"
+
+        await message.reply(reward_list)

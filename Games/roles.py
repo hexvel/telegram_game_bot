@@ -61,8 +61,6 @@ class RolePlay(Database):
             return await message.answer(
                 f"{hide_link(random.choice(RolePlay_Links.KISS))}"
                 f"{kiss_user}\n{Icons.COMMENT} <b>С репликой</b>: {comment}")
-        
-    
 
     async def suck_user(self, message: Message):
         if message.reply_to_message is None:
@@ -125,3 +123,47 @@ class RolePlay(Database):
             return await message.answer(f"{kick_user}")
         else:
             return await message.answer(f"{kick_user}\n<b>{Icons.COMMENT} С репликой</b>: {comment}")
+
+    async def uebat_user(self, message: Message):
+        if message.reply_to_message is None:
+            return await message.answer(Words.REPLYNOTFOUND.format(FALSE=Icons.FALSE))
+
+        user_id, user_name, uebated_user_id, uebated_user_name = self.get_user_info(
+            message)
+
+        uebat_user = RolePlay_Words.UEBAT_USER.format(
+            UEBAT=Icons.HARD, user_id=user_id, user_name=user_name, uebated_user_id=uebated_user_id, uebated_user_name=uebated_user_name)
+
+        comment = message.text.split('\n')[1].strip() if len(
+            message.text.split('\n')) > 1 else None
+
+        if comment is None:
+            return await message.answer(
+                f"{hide_link(random.choice(RolePlay_Links.UEBAT))}"
+                f"{uebat_user}")
+        else:
+            return await message.answer(
+                f"{hide_link(random.choice(RolePlay_Links.UEBAT))}"
+                f"{uebat_user}\n<b>{Icons.COMMENT} С репликой</b>: {comment}")
+
+    async def otliz_user(self, message: Message):
+        if message.reply_to_message is None:
+            return await message.answer(Words.REPLYNOTFOUND.format(FALSE=Icons.FALSE))
+
+        user_id, user_name, otlized_user_id, otlized_user_name = self.get_user_info(
+            message)
+
+        uebat_user = RolePlay_Words.OTLIZ_USER.format(
+            OTLIZ=Icons.OTLIZ, user_id=user_id, user_name=user_name, otlized_user_id=otlized_user_id, otlized_user_name=otlized_user_name)
+
+        comment = message.text.split('\n')[1].strip() if len(
+            message.text.split('\n')) > 1 else None
+
+        if comment is None:
+            return await message.answer(
+                f"{hide_link(random.choice(RolePlay_Links.OTLIZ))}"
+                f"{uebat_user}")
+        else:
+            return await message.answer(
+                f"{hide_link(random.choice(RolePlay_Links.OTLIZ))}"
+                f"{uebat_user}\n<b>{Icons.COMMENT} С репликой</b>: {comment}")
