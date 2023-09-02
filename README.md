@@ -43,5 +43,5 @@ python bot.py
 
 Этот проект создан и поддерживается командой [Hexvel Comunity](https://t.me/hexvel_learn).
 
-#P.S
+## P.S
 Установите себе на пк Mongo
