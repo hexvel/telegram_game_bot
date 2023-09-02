@@ -1,4 +1,5 @@
-TOKEN = "6514252242:AAFo38E2zjfFrWZ2FpF0G7eAydmyz2c9HMY"
+# Можете даже не стараться спиздить токен, я его сразу же поменял :D
+TOKEN = "6514252242:AAEwNLelWO03RKYKeQJjFDbrvn1ib4dOZhM"
 
 
 class Icons:
@@ -66,6 +67,7 @@ class RolePlay_Words:
     FUCK_USER = "{FUCK} | <b><a href='tg://user?id={user_id}'>{user_name}</a></b> выебал(-а) <b><a href='tg://user?id={fucked_user_id}'>{fucked_user_name}</a></b>"
     SUCK_USER = "{SUCK} | <b><a href='tg://user?id={user_id}'>{user_name}</a></b> отсосал(-а) у <b><a href='tg://user?id={sucked_user_id}'>{sucked_user_name}</a></b>"
     KICK_USER = "{KICK} | <b><a href='tg://user?id={user_id}'>{user_name}</a></b> пнул(-а) <b><a href='tg://user?id={kicked_user_id}'>{kicked_user_name}</a></b>"
+
 
 class RolePlay_Links:
     HUG = [
