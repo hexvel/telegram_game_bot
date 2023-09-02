@@ -1,4 +1,4 @@
-TOKEN = "6514252242:AAEwNLelWO03RKYKeQJjFDbrvn1ib4dOZhM"
+TOKEN = "6514252242:AAFo38E2zjfFrWZ2FpF0G7eAydmyz2c9HMY"
 
 
 class Icons:
@@ -18,6 +18,11 @@ class Icons:
     BABY = "👶"
     HEART = "❤️"
     BREAD = "🍞"
+    KISS = "😘"
+    HARD = "😬"
+    YUM = "😋"
+    KICKRP = "👟"
+    HUG = "🤗"
 
 
 class Words:
@@ -43,8 +48,64 @@ class Words:
 
     CHAT_EXISTS = "{FALSE} Данный чат уже зарегистрирован в базе данных."
     CHAT_CREATED = "{TRUE} Чат {name} успешно зарегистрирован в базе даннх\n{SETTINGS} Теперь можете выдавать роль модератора участникам."
-    CHAT_NOT_EXISTS = "{FALSE} Данноа чат не зарезистрирован в базе данных\n{SETTINGS} Чтобы зарезистрировать чат, напедите мне в личку /reg"
+    CHAT_NOT_EXISTS = "{FALSE} Данный чат не зарегистрирован в базе данных\n{SETTINGS} Чтобы зарегистрировать чат, напишите в чате /reg"
 
     MODERATOR_ALREADY_EXISTS = "{FALSE} <b><a href='tg://user?id={user_id}'>Пользователь</a></b> уже является модератором."
+    IS_NOT_MODERATOR = "{FALSE} <b><a href='tg://user?id={user_id}'>Пользователь</a></b> не является модератором."
     USER_ALREAY_ADMIN = "{FALSE} <b><a href='tg://user?id={user_id}'>Пользователь</a></b> уже является администратором."
     MODERATOR_ADDED = "{TRUE} <b><a href='tg://user?id={user_id}'>Пользователь</a></b> теперь является модератором."
+    MODERATOR_REMOVED = "{TRUE} <b><a href='tg://user?id={user_id}'>Пользователь</a></b> больше не является модератором."
+
+    CANT_KICK = "{FALSE} Не удалось исключить участника\n{COMMENT} Возможно этот участник является администратором данного чата."
+    KICKED = "{TRUE} <b>Участник: <a href='tg://user?id={user_id}'>{name}</a></b> был исключен из чата."
+
+
+class RolePlay_Words:
+    HUG_USER = "{HUG} | <b><a href='tg://user?id={user_id}'>{user_name}</a></b> обнял(-а) <b><a href='tg://user?id={huged_user_id}'>{huged_user_name}</a></b>"
+    KISS_USER = "{KISS} | <b><a href='tg://user?id={user_id}'>{user_name}</a></b> поцеловал(-а) <b><a href='tg://user?id={kissed_user_id}'>{kissed_user_name}</a></b>"
+    FUCK_USER = "{FUCK} | <b><a href='tg://user?id={user_id}'>{user_name}</a></b> выебал(-а) <b><a href='tg://user?id={fucked_user_id}'>{fucked_user_name}</a></b>"
+    SUCK_USER = "{SUCK} | <b><a href='tg://user?id={user_id}'>{user_name}</a></b> отсосал(-а) у <b><a href='tg://user?id={sucked_user_id}'>{sucked_user_name}</a></b>"
+    KICK_USER = "{KICK} | <b><a href='tg://user?id={user_id}'>{user_name}</a></b> пнул(-а) <b><a href='tg://user?id={kicked_user_id}'>{kicked_user_name}</a></b>"
+
+class RolePlay_Links:
+    HUG = [
+        'https://pm1.aminoapps.com/6659/30e30a871331073a2016f6024579633d3706c9da_00.jpg',
+        'https://pibig.info/uploads/posts/2021-05/1620650978_1-pibig_info-p-anime-grustnie-obnimashki-anime-krasivo-1.jpg',
+        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNib40b0IL9JvpJFqOJv_lN2MlBuBubky3Eg&usqp=CAU',
+        'https://oir.mobi/uploads/posts/2021-03/1616368640_42-p-anime-obnimashki-paren-i-devushka-48.jpg'
+    ]
+
+    KISS = [
+        'https://cm1.aminoapps.com/7084/5c95d4a2f742cb0dd5bd841798ab64a4fdf63389_00.jpg',
+        'https://foni.club/uploads/posts/2023-01/1673188172_foni-club-p-oboi-anime-parnie-potselui-2.jpg',
+        'https://aniyuki.com/wp-content/uploads/2022/05/aniyuki-anime-kiss-image-44-1024x576.jpg',
+        'https://aniyuki.com/wp-content/uploads/2022/05/aniyuki-anime-kiss-image-17-1024x768.jpg'
+    ]
+
+    FUCK = [
+        'https://img3.gelbooru.com/images/18/22/1822088d61510bba9b381886c8386a3b.jpg',
+        'https://static3.hentai-img.com/upload/20160930/146/149416/16.jpg',
+        'https://topdevka.com/uploads/posts/2023-01/thumbs/1674178154_40-topdevka-com-p-porno-ravtaliya-54.jpg',
+        'https://3.bp.blogspot.com/-Z_GQINTZ9cY/Tdb0Qa64eSI/AAAAAAAAGJE/_DMhmLTATig/s1600/Aerith_Dry.jpg',
+        'https://sun9-72.userapi.com/impg/B92zabJ6DdvovJdeLtUSf29FbBxkKUWYz7L7Cw/bMBCnJJMHbA.jpg?size=1200x750&quality=96&sign=047ce677c027aae3e2a40deb298f32ec&c_uniq_tag=5Fo2jt9noOAvuCHOypnbmDQl5-7TFMSZXBrQqmNDiUg&type=album',
+        'https://static2.hentai-img.com/upload/20160903/118/120014/25.jpg',
+        'https://static13.hentai-img.com/upload/20211113/797/816125/p=700/4.jpg',
+        'https://хентайманга.рф/images/slides/4111/309847/0.jpg',
+        'https://хентайманга.рф/images/slides/4111/309824/1.jpg',
+        'https://хентайманга.рф/images/slides/4111/309884/0.jpg',
+        'https://xxx.sexkomix1.com/uploads_images/porno-komiks-gweda--kokomi--kazeki-yuy--yoimiya--marin--mitsuri-seks-komiks-artov-i-kartinok-2022-07-23/porno-komiks-gweda--kokomi--kazeki-yuy--yoimiya--marin--mitsuri-seks-komiks-artov-i-kartinok-2022-07-23-153953989.jpg'
+    ]
+
+    SUCK = [
+        'https://havepussy.com/0-0/8452_havepussy_.jpg',
+        'https://www.mymypic.net/data/attachment/forum/201710/08/145221zx3hhi7f7k7d7ik1.jpg',
+        'https://static3.hentai-img.com/upload/20160912/138/140938/18.jpg',
+        'http://img02.rl0.ru/5bc92dd557df7ee4922047216d22faca/c1200x900/40.media.tumblr.com/d6460021d086c93db7a0a8ccda98bf72/tumblr_n61akhPz8w1r31yk3o1_1280.jpg',
+        'https://pbs.twimg.com/media/FHnXj04acAAOwQ4.jpg:large',
+        'https://static3.hentai-img.com/upload/20160917/143/145448/42.jpg',
+        'https://avatars.mds.yandex.net/i?id=0d964f72365f9657bc8cf2fe0e5ca3b96e964d69-4268172-images-thumbs&ref=rim&n=33&w=141&h=200',
+        'https://static4.hentai-img.com/upload/20170226/261/266808/14.jpg',
+        'https://pbs.twimg.com/media/C3z7CMuVYAE23jr?format=jpg&name=medium',
+        'https://avatars.mds.yandex.net/i?id=9bff765239eaaed751584b0113bb4930b20b5098-8179254-images-thumbs&ref=rim&n=33&w=141&h=200',
+        'https://pbs.twimg.com/media/E_PXfrSVEAU0jhT.jpg'
+    ]

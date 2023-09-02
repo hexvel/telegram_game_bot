@@ -21,6 +21,15 @@ class Chat(ChatDB):
         if create_chat['is_done']:
             await message.reply(Words.CHAT_CREATED.format(TRUE=Icons.TRUE, name=chat_name, SETTINGS=Icons.SETTINGS))
 
+    async def kick_user(self, bot: Bot, message: Message):
+        name = message.reply_to_message.from_user.get_mention(as_html=True)
+        user_id = message.reply_to_message.from_user.id
+        try:
+            await bot.kick_chat_member(message.chat.id, user_id)
+            await message.reply(Words.KICKED.format(TRUE=Icons.TRUE, user_id=user_id, name=name))
+        except:
+            await message.reply(Words.CANT_KICK.format(FALSE=Icons.FALSE, COMMENT=Icons.COMMENT))
+
     async def delete_message(self, bot: Bot, message: Message):
         is_reply: bool = False
         message_id: int = message.message_id
@@ -31,15 +40,20 @@ class Chat(ChatDB):
             reply_message_id: int = message.reply_to_message.message_id
 
         if len(message_split) > 1:
-            if message_split[1].lower() == '-':
-                await bot.delete_message(message.chat.id, reply_message_id)
-                await bot.delete_message(message.chat.id, message_id)
-                return
+            if message_split[1] == '-':
+                try:
+                    await bot.delete_message(message.chat.id, reply_message_id)
+                    return await bot.delete_message(message.chat.id, message_id)
+                except:
+                    return await message.reply(f"{Icons.FALSE} Не удалось удалить сообщение.")
 
         if is_reply:
-            await bot.delete_message(message.chat.id, reply_message_id)
-            await bot.delete_message(message.chat.id, message_id)
-            await message.answer(f"{Icons.TRUE} Сообщение удалено.")
+            try:
+                await bot.delete_message(message.chat.id, reply_message_id)
+                await bot.delete_message(message.chat.id, message_id)
+                await message.answer(f"{Icons.TRUE} Сообщение удалено.")
+            except:
+                await message.reply(f"{Icons.FALSE} Не удалось удалить сообщение.")
         else:
             await message.answer(f"{Icons.FALSE} Ответьте на сообщение, которое нужно удалить.")
 
@@ -65,21 +79,21 @@ class Chat(ChatDB):
         if mute_type in ["h", "час", "часа", "ч"]:
             dt = datetime.now() + timedelta(hours=mute_period)
             timestamp = dt.timestamp()
-            to_date = dt.strftime("%H:%M:%S")
+            to_date = dt.strftime("%d-%m %H:%M:%S (%Y-года)")
             await bot.restrict_chat_member(message.chat.id, message.reply_to_message.from_user.id, types.ChatPermissions(False), until_date=timestamp)
             return await message.reply(f'{Icons.SETTINGS} <b>Нарушитель:</b> <a href="tg://user?id={message.reply_to_message.from_user.id}">{name}</a>\n{Icons.TIME} <b>Наказан(-а) до:</b> {to_date}\n{Icons.COMMENT} <b>Причина:</b> {comment}')
 
         if mute_type in ["m", "минут", "минута", "м"]:
             dt = datetime.now() + timedelta(minutes=mute_period)
             timestamp = dt.timestamp()
-            to_date = dt.strftime("%H:%M:%S")
+            to_date = dt.strftime("%d-%m %H:%M:%S (%Y-года)")
             await bot.restrict_chat_member(message.chat.id, message.reply_to_message.from_user.id, types.ChatPermissions(False), until_date=timestamp)
             return await message.reply(f'{Icons.SETTINGS} <b>Нарушитель:</b> <a href="tg://user?id={message.reply_to_message.from_user.id}">{name}</a>\n{Icons.TIME} <b>Наказан(-а) до:</b> {to_date}\n{Icons.COMMENT} <b>Причина:</b> {comment}')
 
-        if mute_type in ["d", "день", "дня", "д"]:
+        if mute_type in ["d", "день", "дня", "дней", "д"]:
             dt = datetime.now() + timedelta(days=mute_period)
             timestamp = dt.timestamp()
-            to_date = dt.strftime("%H:%M:%S")
+            to_date = dt.strftime("%d-%m %H:%M:%S (%Y-года)")
             await bot.restrict_chat_member(message.chat.id, message.reply_to_message.from_user.id, types.ChatPermissions(False), until_date=timestamp)
             return await message.reply(f'{Icons.SETTINGS} <b>Нарушитель:</b> <a href="tg://user?id={message.reply_to_message.from_user.id}">{name}</a>\n{Icons.TIME} <b>Наказан(-а) до:</b> {to_date}\n{Icons.COMMENT} <b>Причина:</b> {comment}')
         else:
@@ -97,14 +111,22 @@ class Chat(ChatDB):
 
             user_id = message.reply_to_message.from_user.id
             if user_id != message.from_user.id:
-                await bot.restrict_chat_member(message.chat.id, message.reply_to_message.from_user.id, types.ChatPermissions(True))
+                await bot.restrict_chat_member(message.chat.id, message.reply_to_message.from_user.id, types.ChatPermissions(
+                    can_send_messages=True,
+                    can_send_audios=True,
+                    can_send_documents=True,
+                    can_send_media_messages=True,
+                    can_send_other_messages=True,
+                    can_send_polls=True,
+                    can_send_videos=True
+                ))
                 return await message.reply(f"{Icons.TRUE} <b>Участник <a href='tg://user?id={message.reply_to_message.from_user.id}'>{name}</a></b> успешно размучен.")
 
     async def get_staff(self, bot: Bot, message: Message):
         chat_id = message.chat.id
 
-        staff = self.chat_find_one({"chat_id": message.chat.id})
-        if staff is None:
+        staff = self.chat_find_one({"chat_id": chat_id})
+        if staff['result'] is None:
             return await message.reply(Words.CHAT_NOT_EXISTS.format(FALSE=Icons.FALSE, SETTINGS=Icons.SETTINGS))
 
         chat_admins = await bot.get_chat_administrators(chat_id)
@@ -138,15 +160,29 @@ class Chat(ChatDB):
         admins_ids = [admin.user.id for admin in await bot.get_chat_administrators(chat_id)]
         moderator_id = message.reply_to_message.from_user.id
 
-        moderators = self.chat_find_one({"chat_id": message.chat.id})
+        moderators = self.chat_find_one({"chat_id": chat_id})
         if moderator_id in moderators['result']['chat_moderators']:
             return await message.reply(Words.MODERATOR_ALREADY_EXISTS.format(FALSE=Icons.FALSE, user_id=moderator_id))
 
         if moderator_id in admins_ids:
             return await message.reply(Words.USER_ALREAY_ADMIN.format(FALSE=Icons.FALSE, user_id=moderator_id))
 
-        update = self.chat_update_one({"chat_id": message.chat.id}, {
+        update = self.chat_update_one({"chat_id": chat_id}, {
             "$push": {"chat_moderators": moderator_id}})
 
         if update['is_done']:
             await message.reply(Words.MODERATOR_ADDED.format(TRUE=Icons.TRUE, user_id=moderator_id))
+
+    async def remove_moderator_role(self, bot, message):
+        chat_id = message.chat.id
+        moderator_id = message.reply_to_message.from_user.id
+
+        moderators = self.chat_find_one({"chat_id": chat_id})
+        if moderator_id not in moderators['result']['chat_moderators']:
+            return await message.reply(Words.IS_NOT_MODERATOR.format(FALSE=Icons.FALSE, user_id=moderator_id))
+
+        update = self.chat_update_one({"chat_id": chat_id}, {
+            "$pull": {"chat_moderators": moderator_id}})
+
+        if update['is_done']:
+            await message.reply(Words.MODERATOR_REMOVED.format(TRUE=Icons.TRUE, user_id=moderator_id))

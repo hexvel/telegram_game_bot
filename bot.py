@@ -5,6 +5,7 @@ from aiogram import Bot, types
 from aiogram.types import Message
 from aiogram.utils import executor
 from User.user import UserProfile
+from filters.chat_type import ChatTypeFilter
 from aiogram.dispatcher.filters import Text
 from aiogram.dispatcher.filters import BoundFilter
 from aiogram.dispatcher import Dispatcher, FSMContext
@@ -25,11 +26,22 @@ class AdminFilter(BoundFilter):
 bot = Bot(config.TOKEN, parse_mode="HTML")
 dp = Dispatcher(bot, storage=MemoryStorage())
 dp.filters_factory.bind(AdminFilter)
+dp.filters_factory.bind(ChatTypeFilter)
 
 
 @dp.message_handler(commands=['start'])
 async def start_bot(m: Message):
     await m.answer("Приветствую в новой версии бота!")
+
+
+@dp.message_handler(commands=['msg'])
+async def msg_info(m: Message):
+    await m.reply(str(m))
+
+
+@dp.message_handler(commands=['photo'])
+async def craete_profile(m: Message):
+    await user.set_profile_photo(m)
 
 
 # Команды для профиля
@@ -65,66 +77,96 @@ async def profile(m: Message):
 
 
 # Для админов чатов
-@dp.message_handler(chat_type=types.ChatType.SUPERGROUP, commands=['reg', 'рег'], commands_prefix=".!/", is_admin=True)
+@dp.message_handler(chat_type=['group', 'supergroup'], commands=['reg', 'рег'], commands_prefix=".!/", is_admin=True)
 async def delete_message(m: Message):
     await chat.create_chat_in_db(m)
 
 
-@dp.message_handler(chat_type=types.ChatType.SUPERGROUP, commands=['del', 'уд'], commands_prefix=".!/", is_admin=True)
+@dp.message_handler(chat_type=['group', 'supergroup'], commands=['del', 'уд'], commands_prefix=".!/", is_admin=True)
 async def delete_message(m: Message):
     await chat.delete_message(bot, m)
 
 
-@dp.message_handler(chat_type=types.ChatType.SUPERGROUP, commands=['mute', 'мут'], commands_prefix=".!/", is_admin=True)
+@dp.message_handler(chat_type=['group', 'supergroup'], commands=['mute', 'мут'], commands_prefix=".!/", is_admin=True)
 async def mute_user(m: Message):
     await chat.mute_user(bot, m)
 
 
-@dp.message_handler(chat_type=types.ChatType.SUPERGROUP, commands=['unmute', 'размут'], commands_prefix=".!/", is_admin=True)
+@dp.message_handler(chat_type=['group', 'supergroup'], commands=['unmute', 'размут'], commands_prefix=".!/", is_admin=True)
 async def mute_user(m: Message):
     await chat.unmute_user(bot, m)
 
 
-@dp.message_handler(chat_type=types.ChatType.SUPERGROUP, commands=['moder', 'модер'], commands_prefix=".!/", is_admin=True)
+@dp.message_handler(chat_type=['group', 'supergroup'], commands=['kick', 'кик'], commands_prefix=".!/", is_admin=True)
+async def mute_user(m: Message):
+    await chat.kick_user(bot, m)
+
+
+@dp.message_handler(chat_type=['group', 'supergroup'], commands=['moder', 'модер'], commands_prefix=".!/", is_admin=True)
 async def mute_user(m: Message):
     await chat.set_moderator_role(bot, m)
 
 
+@dp.message_handler(chat_type=['group', 'supergroup'], commands=['user', 'пользователь'], commands_prefix=".!/", is_admin=True)
+async def mute_user(m: Message):
+    await chat.remove_moderator_role(bot, m)
+
+
 # Развлекательные команды для чатов
-@dp.message_handler(chat_type=types.ChatType.SUPERGROUP, commands=['marry', 'брак'], commands_prefix=".!/")
+@dp.message_handler(chat_type=['group', 'supergroup'], commands=['marry', 'брак'], commands_prefix=".!/")
 async def marry_user(m: Message):
     await marry.create_marry(m)
 
 
-@dp.message_handler(chat_type=types.ChatType.SUPERGROUP, commands=['divorce', 'развод'], commands_prefix=".!/")
+@dp.message_handler(chat_type=['group', 'supergroup'], commands=['divorce', 'развод'], commands_prefix=".!/")
 async def marry_user(m: Message):
     await marry.delete_marry(m)
 
 
-@dp.message_handler(chat_type=types.ChatType.SUPERGROUP, commands=['mymarry', 'мойбрак'], commands_prefix=".!/")
+@dp.message_handler(chat_type=['group', 'supergroup'], commands=['mymarry', 'мойбрак'], commands_prefix=".!/")
 async def marry_user(m: Message):
     await marry.get_marry(m)
 
 
-@dp.message_handler(chat_type=types.ChatType.SUPERGROUP, commands=['staff', 'админы'], commands_prefix=".!/")
+@dp.message_handler(chat_type=['group', 'supergroup'], commands=['staff', 'админы'], commands_prefix=".!/")
 async def marry_user(m: Message):
     await chat.get_staff(bot, m)
 
 
-# Для лички
-@dp.message_handler(chat_type=types.ChatType.PRIVATE, commands=['create'])
+@dp.message_handler(chat_type=['group', 'supergroup'], commands=['hug', 'обнять'], commands_prefix=".!/")
+async def marry_user(m: Message):
+    await rp.hug_user(m)
+
+
+@dp.message_handler(chat_type=['group', 'supergroup'], commands=['kiss', 'поцеловать'], commands_prefix=".!/")
+async def marry_user(m: Message):
+    await rp.kiss_user(m)
+
+
+@dp.message_handler(chat_type=['group', 'supergroup'], commands=['fuck', 'выебать'], commands_prefix=".!/")
+async def marry_user(m: Message):
+    await rp.fuck_user(m)
+
+
+@dp.message_handler(chat_type=['group', 'supergroup'], commands=['suck', 'отсосать'], commands_prefix=".!/")
+async def marry_user(m: Message):
+    await rp.suck_user(m)
+
+
+@dp.message_handler(chat_type=['group', 'supergroup'], commands=['rpkick', 'пнуть'], commands_prefix=".!/")
+async def marry_user(m: Message):
+    await rp.kick_user(m)
+
+
+@dp.message_handler(chat_type=['group', 'supergroup'], commands=['create', 'создать'], commands_prefix=".!/")
 async def craete_profile(m: Message):
     await user.create_user(m)
 
 
+# Для лички
 @dp.message_handler(chat_type=types.ChatType.PRIVATE, commands=['sex'])
 async def craete_profile(m: Message):
     await user.set_user_sex(m)
-
-
-@dp.message_handler(chat_type=types.ChatType.PRIVATE, commands=['photo'])
-async def craete_profile(m: Message):
-    await user.set_profile_photo(m)
 
 
 @dp.message_handler(state=UserProfile.profile_photo, content_types=['photo'])
@@ -164,4 +206,5 @@ if __name__ == '__main__':
     user = main.user
     chat = main.chat
     marry = main.marry
+    rp = main.rp
     executor.start_polling(dp, skip_updates=True)
