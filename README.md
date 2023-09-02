@@ -42,3 +42,6 @@ python bot.py
 ## Автор
 
 Этот проект создан и поддерживается командой [Hexvel Comunity](https://t.me/hexvel_learn).
+
+#P.S
+Установите себе на пк Mongo
